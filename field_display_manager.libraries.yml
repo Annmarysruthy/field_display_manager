@@ -1,7 +1,6 @@
 manage_display:
   js:
     js/manage_display.js: {}
-    js/change_region.js: {}
   dependencies:
     - core/drupal
     - core/jquery
