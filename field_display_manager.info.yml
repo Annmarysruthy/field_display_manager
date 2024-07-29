@@ -1,0 +1,7 @@
+name: 'Field Display Manager'
+type: module
+description: 'Provides functionality to enable or disable all fields in entity displays.'
+core_version_requirement: ^9 || ^10 || ^11
+package: Custom
+dependencies:
+  - drupal:field_ui

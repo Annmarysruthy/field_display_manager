@@ -1,0 +1,39 @@
+<?php
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+use Drupal\Core\Link;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_help().
+ */
+function field_display_manager_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.field_display_manager':
+      return '<p>' . t('Provides functionality to enable or disable all fields in entity displays.') . '</p>';
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() to add 'Disable All' and 'Enable All' radio buttons.
+ */
+function field_display_manager_form_entity_view_display_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+    // Add "Disable All" and "Enable All" radio buttons at the top of the form.
+    $form['field_display_manager'] = [
+      '#type' => 'container',
+      '#weight' => -100,
+    ];
+
+    $form['field_display_manager']['disable_all'] = [
+      '#type' => 'radio',
+      '#title' => t('Disable All'),
+      '#name' => 'field_display_manager',
+    ];
+
+    $form['field_display_manager']['enable_all'] = [
+      '#type' => 'radio',
+      '#title' => t('Enable All'),
+      '#name' => 'field_display_manager',
+    ];
+}
