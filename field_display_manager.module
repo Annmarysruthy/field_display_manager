@@ -17,20 +17,6 @@ function field_display_manager_help($route_name, RouteMatchInterface $route_matc
  * Implements hook_form_FORM_ID_alter() to add 'Disable All' and 'Enable All' radio buttons.
  */
 function field_display_manager_form_entity_view_display_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-    // Add "Disable All" and "Enable All" radio buttons at the top of the form.
-    $form['field_display_manager'] = [
-      '#type' => 'container',
-      '#weight' => -100,
-    ];
-
-    $options = [
-      '1' => t('Enable All'),
-      '2' => t('Disable All')
-    ];
-
-    $form['field_display_manager']['disable_all'] = [
-      '#type' => 'radios',
-      '#options' => $options,
-      '#name' => 'field_display_manager',
-    ];
+  // Attach the js library.
+  $form['#attached']['library'][] = 'field_display_manager/manage_display';
 }

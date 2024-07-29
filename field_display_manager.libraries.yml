@@ -3,3 +3,5 @@ manage_display:
     js/manage_display.js: {}
   dependencies:
     - core/drupal
+    - core/jquery
+    - core/once
