@@ -1,8 +1,6 @@
 <?php
 
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Url;
-use Drupal\Core\Link;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -25,15 +23,14 @@ function field_display_manager_form_entity_view_display_edit_form_alter(&$form, 
       '#weight' => -100,
     ];
 
-    $form['field_display_manager']['disable_all'] = [
-      '#type' => 'radio',
-      '#title' => t('Disable All'),
-      '#name' => 'field_display_manager',
+    $options = [
+      '1' => t('Enable All'),
+      '2' => t('Disable All')
     ];
 
-    $form['field_display_manager']['enable_all'] = [
-      '#type' => 'radio',
-      '#title' => t('Enable All'),
+    $form['field_display_manager']['disable_all'] = [
+      '#type' => 'radios',
+      '#options' => $options,
       '#name' => 'field_display_manager',
     ];
 }
