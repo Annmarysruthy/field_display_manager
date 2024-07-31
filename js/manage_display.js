@@ -26,6 +26,14 @@
         const $radios = $(Drupal.toggleButtons());
         // Insert the radio buttons.
         $button.before($radios);
+
+        // Function to change the region of all fields.
+        function toggleFields(region) {
+          $('select.field-region', context).each(function () {
+            $(this).val(region).trigger('change');
+          });
+        }
+
         // Attach change event.
         $radios.find('input[type="radio"]').on('change',
           function(e) {
@@ -38,6 +46,7 @@
                 $disabledRegion.after($enabledFields);
                 $disabledRegion.removeClass("region-empty").addClass("region-populated");
                 $enabledRegion.removeClass("region-populated").addClass("region-empty");
+                toggleFields('hidden');
               }
             } else if ('enable_all' == e.target.value) {
               // Enable all fields.
@@ -46,6 +55,7 @@
                 $enabledRegion.after($disbledFields);
                 $enabledRegion.removeClass("region-empty").addClass("region-populated");
                 $disabledRegion.removeClass("region-populated").addClass("region-empty");
+                toggleFields('content');
               }
             }
           }
