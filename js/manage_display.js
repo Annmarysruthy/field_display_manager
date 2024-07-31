@@ -20,19 +20,45 @@
   Drupal.behaviors.fieldDisplayManagerManageDisplay = {
     attach (context, settings) {
 
+      /**
+       * Update the region dropdown of all fields.
+       *
+       * @param {string} region
+       *   Name of region.
+       */
+      function toggleFields(region) {
+        $("select.field-region", context).each(function () {
+          $(this).val(region).trigger("change");
+        });
+      }
+
+      /**
+       * Update field weights in the given region.
+       *
+       * @param {string} region
+       *   Name of region.
+       */
+      function updateFieldWeights(region) {
+        const table = $("#field-display-overview");
+        // The minimum weight.
+        let weight = 0;
+        // Update the field weights.
+        table
+          .find(`.region-${region}-message`)
+          .nextUntil(".region-title")
+          .find("input.field-weight")
+          .each(function () {
+            this.value = weight;
+            ++weight;
+          });
+      }
+
       const $wrapper = $(once("tabledragToggle", ".tabledrag-toggle-weight-wrapper", context));
       const $button = $wrapper.find("button.tabledrag-toggle-weight");
       if ($button.length == 1) {
         const $radios = $(Drupal.toggleButtons());
         // Insert the radio buttons.
         $button.before($radios);
-
-        // Function to change the region of all fields.
-        function toggleFields(region) {
-          $('select.field-region', context).each(function () {
-            $(this).val(region).trigger('change');
-          });
-        }
 
         // Attach change event.
         $radios.find('input[type="radio"]').on('change',
@@ -47,6 +73,7 @@
                 $disabledRegion.removeClass("region-empty").addClass("region-populated");
                 $enabledRegion.removeClass("region-populated").addClass("region-empty");
                 toggleFields('hidden');
+                updateFieldWeights('hidden');
               }
             } else if ('enable_all' == e.target.value) {
               // Enable all fields.
@@ -56,6 +83,7 @@
                 $enabledRegion.removeClass("region-empty").addClass("region-populated");
                 $disabledRegion.removeClass("region-populated").addClass("region-empty");
                 toggleFields('content');
+                updateFieldWeights("content");
               }
             }
           }
